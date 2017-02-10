@@ -1,0 +1,2 @@
+# idiomator
+simle php snippet 
