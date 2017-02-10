@@ -1,0 +1,22 @@
+<IfModule mod_rewrite.c>
+  RewriteCond %{HTTPS} off
+  # First rewrite to HTTPS:
+  # Don't put www. here. If it is already there it will be included, if not
+  # the subsequent rule will catch it.
+  RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # Now, rewrite any request to the wrong domain to use www.
+  #RewriteCond %{HTTP_HOST} !^www\.
+  #RewriteRule .* https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  RewriteEngine On
+  RewriteBase /
+
+  # empty url -> redirect to en/
+  RewriteCond %{QUERY_STRING} !lang=(en|es|cat)
+
+  # url is ONLY '/en' or '/es' -> redirect to /en/ or /es/ (adding slash)
+  RewriteRule ^(en|es|cat)$  $1/ [R=301,L]
+
+  # now all urls have en/ es/ -> parse them
+  RewriteRule ^(en|es|cat)/(.*)$  $2?lang=$1&%{query_STRING} [L]
+</IfModule>
