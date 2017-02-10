@@ -1,3 +1,4 @@
+<?php
 //Get language and format to iso code
 $lang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 $lc = substr($lang, 0, 2);
@@ -25,3 +26,5 @@ if (isset($_GET['lang'])){
 }
 //Include language file.
 include "lang/".$cl.".php";
+
+?>
